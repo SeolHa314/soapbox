@@ -31,9 +31,10 @@ jobs:
       - name: Build project
         env:
           NODE_ENV: 'production'
+          FE_BUILD_DIR: 'built/static'
         run: yarn build
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: soapbox-build
-          path: static
+          path: built
