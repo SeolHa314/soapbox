@@ -32,10 +32,8 @@ jobs:
         env:
           NODE_ENV: 'production'
         run: yarn build
-      - name: Zip artifact
-        run: zip release.zip ./static -r
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           name: soapbox-build
-          path: release.zip
+          path: static
