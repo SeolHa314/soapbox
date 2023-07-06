@@ -1,0 +1,41 @@
+name: Build and upload artifect
+
+on:
+  push:
+    branches: 
+      - 'develop'
+
+jobs:
+  build_soapbox:
+    name: build soapbox
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.4.0]
+    steps:
+      - name: get repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.after }}
+      - name: set Node.js env
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: node-modules-${{ runner.os }}-${{ matrix.node-version }}-soapbox
+      - name: Install packages
+        run: test -d node_modules || yarn install --frozen-lockfile
+      - name: Build project
+        env:
+          NODE_ENV: 'production'
+        run: yarn build
+      - name: Zip artifect
+        run: zip release.zip ./static -r
+      - name: Upload Artifect
+        uses: actions/upload-artifect@v3
+        with:
+          name: soapbox-build
+          path: release.zip
