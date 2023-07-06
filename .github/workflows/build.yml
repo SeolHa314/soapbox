@@ -1,4 +1,4 @@
-name: Build and upload artifect
+name: Build and upload artifact
 
 on:
   push:
@@ -32,10 +32,10 @@ jobs:
         env:
           NODE_ENV: 'production'
         run: yarn build
-      - name: Zip artifect
+      - name: Zip artifact
         run: zip release.zip ./static -r
-      - name: Upload Artifect
-        uses: actions/upload-artifect@v3
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
         with:
           name: soapbox-build
           path: release.zip
