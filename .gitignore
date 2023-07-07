@@ -1,6 +1,7 @@
 /node_modules/
 /tmp/
 /build/
+/built/
 /coverage/
 /.coverage/
 /.eslintcache
