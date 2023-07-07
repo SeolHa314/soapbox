@@ -175,7 +175,7 @@ const StatusInteractionBar: React.FC<IStatusInteractionBar> = ({ status }): JSX.
               return (
                 <Emoji
                   key={i}
-                  className='h-4.5 w-4.5 flex-none'
+                  className='h-4.5 flex-none'
                   emoji={e.name}
                   src={e.url}
                 />
