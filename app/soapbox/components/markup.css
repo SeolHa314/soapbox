@@ -65,7 +65,8 @@
 
 /* Emojis */
 [data-markup] img.emojione {
-  @apply w-5 h-5 m-0;
+  /* @apply w-5 h-5 m-0; Show emoji like misskey style */
+  @apply h-5 m-0;
 }
 
 /* Hide Markdown images (Pleroma) */
