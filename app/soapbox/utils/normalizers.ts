@@ -10,7 +10,7 @@ export const makeEmojiMap = (emojis: any) => emojis.reduce((obj: any, emoji: any
 
 /** Normalize entity ID */
 export const normalizeId = (id: any): string | null => {
-  return typeof id === 'string' ? id : null;
+  return z.string().nullable().catch(null).parse(id);
 };
 
 export type Normalizer<V, R> = (value: V) => R;
@@ -26,4 +26,13 @@ export type Normalizer<V, R> = (value: V) => R;
  */
 export const toSchema = <V, R>(normalizer: Normalizer<V, R>) => {
   return z.custom<V>().transform<R>(normalizer);
+};
+
+/** Legacy normalizer transition helper function. */
+export const maybeFromJS = (value: any): unknown => {
+  if ('toJS' in value) {
+    return value.toJS();
+  } else {
+    return value;
+  }
 };

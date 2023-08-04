@@ -26,6 +26,14 @@ function useListState<K extends keyof EntityListState>(path: EntitiesPath, key: 
   return useAppSelector(state => selectListState(state, path, key));
 }
 
+/** Get a single entity by its ID from the store. */
+function selectEntity<TEntity extends Entity>(
+  state: RootState,
+  entityType: string, id: string,
+): TEntity | undefined {
+  return state.entities[entityType]?.store[id] as TEntity | undefined;
+}
+
 /** Get list of entities from Redux. */
 function selectEntities<TEntity extends Entity>(state: RootState, path: EntitiesPath): readonly TEntity[] {
   const cache = selectCache(state, path);
@@ -44,10 +52,25 @@ function selectEntities<TEntity extends Entity>(state: RootState, path: Entities
   ) : [];
 }
 
+/** Find an entity using a finder function. */
+function findEntity<TEntity extends Entity>(
+  state: RootState,
+  entityType: string,
+  lookupFn: (entity: TEntity) => boolean,
+) {
+  const cache = state.entities[entityType];
+
+  if (cache) {
+    return (Object.values(cache.store) as TEntity[]).find(lookupFn);
+  }
+}
+
 export {
   selectCache,
   selectList,
   selectListState,
   useListState,
   selectEntities,
+  selectEntity,
+  findEntity,
 };
