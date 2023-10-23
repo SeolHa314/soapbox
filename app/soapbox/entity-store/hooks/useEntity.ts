@@ -2,13 +2,15 @@ import { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import z from 'zod';
 
-import { useAppDispatch, useAppSelector, useLoading } from 'soapbox/hooks';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector';
+import { useLoading } from 'soapbox/hooks/useLoading';
 
 import { importEntities } from '../actions';
 import { selectEntity } from '../selectors';
 
-import type { Entity } from '../types';
 import type { EntitySchema, EntityPath, EntityFn } from './types';
+import type { Entity } from '../types';
 
 /** Additional options for the hook. */
 interface UseEntityOpts<TEntity extends Entity> {

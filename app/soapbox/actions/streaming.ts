@@ -2,7 +2,7 @@ import { getLocale, getSettings } from 'soapbox/actions/settings';
 import { importEntities } from 'soapbox/entity-store/actions';
 import { Entities } from 'soapbox/entity-store/entities';
 import { selectEntity } from 'soapbox/entity-store/selectors';
-import messages from 'soapbox/locales/messages';
+import messages from 'soapbox/messages';
 import { ChatKeys, IChat, isLastMessage } from 'soapbox/queries/chats';
 import { queryClient } from 'soapbox/queries/client';
 import { getUnreadChatsCount, updateChatListItem, updateChatMessage } from 'soapbox/utils/chats';
@@ -172,11 +172,6 @@ const connectTimelineStream = (
           break;
         case 'marker':
           dispatch({ type: MARKER_FETCH_SUCCESS, marker: JSON.parse(data.payload) });
-          break;
-        case 'nostr.sign':
-          window.nostr?.signEvent(JSON.parse(data.payload))
-            .then((data) => websocket.send(JSON.stringify({ type: 'nostr.sign', data })))
-            .catch(() => console.warn('Failed to sign Nostr event.'));
           break;
       }
     },

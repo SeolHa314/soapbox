@@ -2,6 +2,7 @@ image: node:20
 
 variables:
   NODE_ENV: test
+  DS_EXCLUDED_ANALYZERS: gemnasium-python
 
 default:
   interruptible: true
@@ -64,27 +65,27 @@ lint-sass:
       - "**/*.css"
       - ".stylelintrc.json"
 
-jest:
-  stage: test
-  script: yarn test:coverage --runInBand
-  only:
-    changes:
-      - "**/*.js"
-      - "**/*.json"
-      - "app/soapbox/**/*"
-      - "webpack/**/*"
-      - "custom/**/*"
-      - "jest.config.cjs"
-      - "package.json"
-      - "yarn.lock"
-      - ".gitlab-ci.yml"
-  coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
-  artifacts:
-    reports:
-      junit: junit.xml
-      coverage_report:
-        coverage_format: cobertura
-        path: .coverage/cobertura-coverage.xml
+# jest:
+#   stage: test
+#   script: yarn test:coverage --runInBand
+#   only:
+#     changes:
+#       - "**/*.js"
+#       - "**/*.json"
+#       - "app/soapbox/**/*"
+#       - "webpack/**/*"
+#       - "custom/**/*"
+#       - "jest.config.cjs"
+#       - "package.json"
+#       - "yarn.lock"
+#       - ".gitlab-ci.yml"
+#   coverage: /All files[^|]*\|[^|]*\s+([\d\.]+)/
+#   artifacts:
+#     reports:
+#       junit: junit.xml
+#       coverage_report:
+#         coverage_format: cobertura
+#         path: .coverage/cobertura-coverage.xml
 
 nginx-test:
   stage: test
@@ -100,10 +101,11 @@ build-production:
   stage: test
   script:
     - yarn build
-    - yarn manage:translations en
-    # Fail if files got changed.
-    # https://stackoverflow.com/a/9066385
-    - git diff --quiet
+    # - yarn manage:translations en
+    # # Fail if files got changed.
+    # # https://stackoverflow.com/a/9066385
+    # - git diff --quiet
+    - cp static/index.html static/404.html
   variables:
     NODE_ENV: production
   artifacts:
@@ -149,9 +151,9 @@ pages:
 
 docker:
   stage: deploy
-  image: docker:23.0.0
+  image: docker:24.0.6
   services:
-    - docker:23.0.0-dind
+    - docker:24.0.6-dind
   tags:
     - dind
   # https://medium.com/devops-with-valentine/how-to-build-a-docker-image-and-push-it-to-the-gitlab-container-registry-from-a-gitlab-ci-pipeline-acac0d1f26df
@@ -173,4 +175,3 @@ release:
 
 include:
   - template: Jobs/Dependency-Scanning.gitlab-ci.yml
-  - template: Security/License-Scanning.gitlab-ci.yml

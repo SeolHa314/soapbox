@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import { z } from 'zod';
 
-import { useAppDispatch, useAppSelector, useGetState } from 'soapbox/hooks';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch';
+import { useAppSelector } from 'soapbox/hooks/useAppSelector';
+import { useGetState } from 'soapbox/hooks/useGetState';
 import { filteredArray } from 'soapbox/schemas/utils';
 
 import { entitiesFetchFail, entitiesFetchRequest, entitiesFetchSuccess } from '../actions';
@@ -9,8 +11,8 @@ import { selectCache, selectListState, useListState } from '../selectors';
 
 import { parseEntitiesPath } from './utils';
 
-import type { Entity } from '../types';
 import type { EntitiesPath, EntityFn, EntitySchema, ExpandedEntitiesPath } from './types';
+import type { Entity } from '../types';
 import type { RootState } from 'soapbox/store';
 
 interface UseBatchedEntitiesOpts<TEntity extends Entity> {

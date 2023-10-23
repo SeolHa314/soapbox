@@ -18,6 +18,7 @@ import { useAppSelector, useAppDispatch } from 'soapbox/hooks';
 import { isLocal } from 'soapbox/utils/accounts';
 
 import { showProfileHoverCard } from './hover-ref-wrapper';
+import { dateFormatOptions } from './relative-timestamp';
 import { Card, CardBody, HStack, Icon, Stack, Text } from './ui';
 
 import type { Account, PatronUser } from 'soapbox/schemas';
@@ -30,13 +31,13 @@ const getBadges = (
   const badges = [];
 
   if (account?.admin) {
-    badges.push(<Badge key='admin' slug='admin' title='Admin' />);
+    badges.push(<Badge key='admin' slug='admin' title={<FormattedMessage id='account_moderation_modal.roles.admin' defaultMessage='Admin' />} />);
   } else if (account?.moderator) {
-    badges.push(<Badge key='moderator' slug='moderator' title='Moderator' />);
+    badges.push(<Badge key='moderator' slug='moderator' title={<FormattedMessage id='account_moderation_modal.roles.moderator' defaultMessage='Moderator' />} />);
   }
 
   if (patronUser?.is_patron) {
-    badges.push(<Badge key='patron' slug='patron' title='Patron' />);
+    badges.push(<Badge key='patron' slug='patron' title={<FormattedMessage id='account.patron' defaultMessage='Patron' />} />);
   }
 
   return badges;
@@ -128,7 +129,7 @@ export const ProfileHoverCard: React.FC<IProfileHoverCard> = ({ visible = true }
                   className='h-4 w-4 text-gray-800 dark:text-gray-200'
                 />
 
-                <Text size='sm'>
+                <Text size='sm' title={intl.formatDate(account.created_at, dateFormatOptions)}>
                   <FormattedMessage
                     id='account.member_since' defaultMessage='Joined {date}' values={{
                       date: memberSinceDate,

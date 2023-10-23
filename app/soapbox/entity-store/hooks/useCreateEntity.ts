@@ -1,14 +1,15 @@
 import { AxiosError } from 'axios';
 import { z } from 'zod';
 
-import { useAppDispatch, useLoading } from 'soapbox/hooks';
+import { useAppDispatch } from 'soapbox/hooks/useAppDispatch';
+import { useLoading } from 'soapbox/hooks/useLoading';
 
 import { importEntities } from '../actions';
 
 import { parseEntitiesPath } from './utils';
 
-import type { Entity } from '../types';
 import type { EntityCallbacks, EntityFn, EntitySchema, ExpandedEntitiesPath } from './types';
+import type { Entity } from '../types';
 
 interface UseCreateEntityOpts<TEntity extends Entity = Entity> {
   schema?: EntitySchema<TEntity>

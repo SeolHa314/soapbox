@@ -1,11 +1,11 @@
-import { useApi } from 'soapbox/hooks';
+import { useApi } from 'soapbox/hooks/useApi';
 
 import { useCreateEntity } from './useCreateEntity';
 import { useDeleteEntity } from './useDeleteEntity';
 import { parseEntitiesPath } from './utils';
 
-import type { Entity } from '../types';
 import type { EntitySchema, ExpandedEntitiesPath } from './types';
+import type { Entity } from '../types';
 
 interface UseEntityActionsOpts<TEntity extends Entity = Entity> {
   schema?: EntitySchema<TEntity>
