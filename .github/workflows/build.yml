@@ -3,7 +3,7 @@ name: Build and upload artifact
 on:
   push:
     branches: 
-      - 'develop'
+      - '0nee-main'
 
 jobs:
   build_soapbox:
