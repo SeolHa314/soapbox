@@ -11,18 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20.4.0]
+        node-version: [20.9.0]
     steps:
       - name: get repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.after }}
       - name: set Node.js env
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: Cache node_modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: node_modules
           key: node-modules-${{ runner.os }}-${{ matrix.node-version }}-soapbox
@@ -33,7 +33,7 @@ jobs:
           NODE_ENV: 'production'
         run: yarn build
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: soapbox-build
           path: dist
