@@ -32,6 +32,8 @@ jobs:
         env:
           NODE_ENV: 'production'
         run: yarn build
+      - name: Generate 404 page
+        run: cp dist/index.html dist/404.html
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
